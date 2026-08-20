@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap');
 :root {
   --bg: #07110f;
   --panel: #0d1a17;
@@ -14,7 +14,7 @@
   --gold: #ffc95c;
   --coral: #ff7d68;
   --sans: 'Noto Sans TC', system-ui, sans-serif;
-  --display: 'Orbitron', 'Noto Sans TC', system-ui, sans-serif;
+  --display: 'Chakra Petch', 'Noto Sans TC', system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; }
