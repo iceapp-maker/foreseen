@@ -34,6 +34,7 @@
   var authors = ['星海觀測者', 'Kairos', 'Mira Chen', '北方之眼', '未來抄寫員', '晨霧資料室', '第七觀測站', '時間旅人', '遠方訊號', '明日備忘錄'];
   var selectedCategory = 'all';
   var selectedFeed = 'hot';
+  var pinnedRecordId = '';
   var userPredictionsKey = 'foreseen_user_predictions_v1';
   var deviceIdKey = 'foreseen_device_id_v1';
   var voteReceiptKey = 'foreseen_vote_receipts_v1';
@@ -189,9 +190,13 @@
     var remote = databaseRecords.filter(function (item) {
       return (!sharedPrediction || item.id !== sharedPrediction.id) && selectedFeed !== 'resolved' && (category === 'all' || item.category === category);
     });
-    return (sharedPrediction && selectedFeed !== 'resolved' && (category === 'all' || sharedPrediction.category === category) ? [sharedPrediction] : [])
-      .concat(remote, userRecordsFor(category).filter(function (item) { return !item.shared; }), records)
-      .slice(0, category === 'all' ? 20 : 12);
+    var combined = (sharedPrediction && selectedFeed !== 'resolved' && (category === 'all' || sharedPrediction.category === category) ? [sharedPrediction] : [])
+      .concat(remote, userRecordsFor(category).filter(function (item) { return !item.shared; }), records);
+    if (pinnedRecordId) {
+      var pinned = combined.filter(function (item) { return item.id === pinnedRecordId; })[0];
+      if (pinned) combined = [pinned].concat(combined.filter(function (item) { return item.id !== pinnedRecordId; }));
+    }
+    return combined.slice(0, category === 'all' ? 20 : 12);
   }
 
   function card(record, number) {
@@ -406,7 +411,41 @@
     feed.innerHTML = '<div class="mock-data-note"><span><strong>正式資料庫已啟用</strong>　新預言、短連結、投票與追隨會跨裝置同步；其餘範例仍標示為模擬資料。</span><b>' + records.length + ' 則</b></div>' + records.map(card).join('');
   }
 
+  function openSignalPrediction(button) {
+    var category = button.getAttribute('data-signal-category');
+    var recordId = button.getAttribute('data-signal-record');
+    if (!categories[category] || !recordId) return;
+    selectedCategory = category;
+    selectedFeed = 'hot';
+    pinnedRecordId = recordId;
+    document.querySelectorAll('.topic').forEach(function (item) {
+      item.classList.toggle('active', item.getAttribute('data-category') === category);
+    });
+    document.querySelectorAll('.feed-tabs [data-feed]').forEach(function (item) {
+      item.classList.toggle('active', item.getAttribute('data-feed') === 'hot');
+    });
+    render();
+    pinnedRecordId = '';
+    window.requestAnimationFrame(function () {
+      var target = document.querySelector('.prediction-card[data-record-id="' + recordId + '"]');
+      if (!target) return;
+      target.setAttribute('tabindex', '-1');
+      target.classList.remove('attention');
+      void target.offsetWidth;
+      target.classList.add('attention');
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      window.setTimeout(function () {
+        target.classList.remove('attention');
+        if (!target.classList.contains('user-prediction-card')) target.removeAttribute('tabindex');
+      }, 2400);
+    });
+  }
+
   function init() {
+    document.querySelectorAll('[data-signal-record]').forEach(function (button) {
+      button.addEventListener('click', function () { openSignalPrediction(button); });
+    });
     document.querySelectorAll('.topic').forEach(function (button) {
       button.addEventListener('click', function () {
         selectedCategory = button.getAttribute('data-category') || 'all';

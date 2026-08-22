@@ -16,7 +16,10 @@
     <meta name="twitter:description" content="封存你的預言，讓結果建立信用。" />
     <meta name="twitter:image" content="https://iceapp-maker.github.io/foreseen/og.png" />
     <title>預知信｜把今天的判斷交給未來驗證</title>
-    <link rel="stylesheet" href="styles-v17.css?v=18" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles-v17.css?v=21" />
       <script>window.FORESEEN_API_ORIGIN="https://tidal-letters.icejob92.chatgpt.site";window.FORESEEN_PUBLIC_BASE="https://iceapp-maker.github.io/foreseen";</script>
   </head>
   <body>
@@ -39,7 +42,7 @@
         <div class="oracle" aria-label="下一則即將結算的預言">
           <div class="oracle-grid"></div><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
           <a class="oracle-core" id="next-result-button" href="#next-result-panel" aria-controls="next-result-panel"><small>NEXT RESULT</small><strong id="countdown" aria-live="off">讀取中…</strong><span>距下一則預言揭曉</span><b>點擊查看預言內容 →</b></a>
-          <span class="signal signal-a">NVDA · 72%</span><span class="signal signal-b">NBA · 64%</span><span class="signal signal-c">BTC · 51%</span>
+          <button class="signal signal-a" type="button" data-signal-category="stocks" data-signal-record="stocks-2" aria-label="查看 NVIDIA NVDA 預言">NVDA · 72%</button><button class="signal signal-b" type="button" data-signal-category="sports" data-signal-record="sports-1" aria-label="查看勇士對湖人預言">NBA · 64%</button><button class="signal signal-c" type="button" data-signal-category="crypto" data-signal-record="crypto-1" aria-label="查看 Bitcoin 預言">BTC · 51%</button>
         </div>
       </section>
 
@@ -189,7 +192,7 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="countdown-v4.js?v=12" defer></script>
     <script src="creator-v17.js" defer></script>
-    <script src="feed-v17.js" defer></script>
+    <script src="feed-v17.js?v=21" defer></script>
     <script src="ranking-v7.js?v=12" defer></script>
   </body>
 </html>
